@@ -1,0 +1,67 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    background-color: #000; /* Fallback background */
+    width: 100vw;
+    height: 100vh;
+}
+
+
+.wallpaper-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+
+.layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Make layers below interactable */
+}
+
+
+.layer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.foreground {
+    /* Adjust styles for the foreground image if needed */
+}
+
+
+.interactive-element {
+    pointer-events: auto; /* Make this layer interactable */
+    transform: translate(-50%, -50%); /* Center the element */
+}
+
+
+.glowing-eye {
+    width: 50px;
+    height: 50px;
+    background-color: #ff00ff;
+    border-radius: 50%;
+    box-shadow: 0 0 20px #ff00ff;
+    cursor: pointer;
+}
+
+
+.text-overlay {
+    pointer-events: none;
+}
+
+
+.hi-text {
+    color: #00ff00;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 2em;
+    text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00;
+    /* Add glitch animation if desired */
+}

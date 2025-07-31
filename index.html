@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KASKA Wallpaper</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+
+    :root {
+      --glitch-color-1: #ff00ff;
+      --glitch-color-2: #00ffff;
+      --main-font: 'Roboto Mono', monospace;
+      --particle-color: #00ffff;
+      --text-color: #00ff00;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #0a0a0a;
+      font-family: var(--main-font);
+      cursor: none;
+    }
+
+    .wallpaper-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .image-container {
+      position: absolute;
+      width: 110%;
+      height: 110%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 0.1s ease-out;
+    }
+
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: brightness(0.8) contrast(1.1) url(#chromatic);
+    }
+
+    .halftone-overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 20%, transparent 20.1%);
+      background-size: 5px 5px;
+      animation: halftone-fade 10s infinite alternate;
+      mix-blend-mode: overlay;
+    }
+
+    .glitch-overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .glitch-overlay::before,
+    .glitch-overlay::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-repeat: no-repeat;
+      opacity: 0;
+    }
+
+    .glitch-overlay::before {
+      background-image: url('character.jpg');
+      background-size: 110% 110%;
+      background-position: center;
+      background-blend-mode: overlay;
+      clip-path: inset(0 45% 0 45%);
+      animation: glitch-color 2s infinite linear alternate, glitch-move-1 0.5s infinite alternate;
+      box-shadow: 0 0 5px var(--glitch-color-1);
+      filter: blur(1px);
+    }
+
+    .glitch-overlay::after {
+      background-image: url('character.png');
+      background-size: 110% 110%;
+      background-position: center;
+      background-blend-mode: difference;
+      clip-path: inset(0 60% 0 20%);
+      animation: glitch-color 1.5s infinite linear alternate, glitch-move-2 0.3s infinite alternate;
+      box-shadow: 0 0 5px var(--glitch-color-2);
+      filter: blur(1px);
+    }
+
+    .glitch-overlay.active-glitch::before,
+    .glitch-overlay.active-glitch::after {
+      opacity: 0.5 !important;
+      animation-duration: 0.1s !important;
+    }
+
+    @keyframes glitch-color {
+      0% { opacity: 0; }
+      10%, 20% { opacity: 0.3; }
+      15%, 25%, 100% { opacity: 0; }
+    }
+
+    @keyframes glitch-move-1 {
+      0% { transform: translate(-3px, 1px); }
+      100% { transform: translate(3px, -1px); }
+    }
+
+    @keyframes glitch-move-2 {
+      0% { transform: translate(5px, -2px); }
+      100% { transform: translate(-5px, 2px); }
+    }
+
+    @keyframes halftone-fade {
+      0%, 100% { opacity: 0.1; }
+      50% { opacity: 0.5; }
+    }
+
+    .hi-text-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 100;
+      pointer-events: none;
+    }
+
+    .hi-text-overlay span {
+      color: var(--text-color);
+      font-size: 3em;
+      text-shadow: 0 0 5px var(--text-color), 0 0 10px var(--text-color);
+    }
+
+    .blinking-overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      pointer-events: none;
+      opacity: 0;
+      animation: screen-blink 15s linear infinite;
+      mix-blend-mode: overlay;
+    }
+
+    @keyframes screen-blink {
+      0%, 98%, 100% { opacity: 0; }
+      99% { opacity: 0.1; }
+    }
+
+    .scanlines {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.03),
+        rgba(255,255,255,0.03) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      animation: scan-move 6s linear infinite;
+      mix-blend-mode: overlay;
+    }
+
+    @keyframes scan-move {
+      0% { background-position-y: 0; }
+      100% { background-position-y: 100%; }
+    }
+
+    .light-leak {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at 80% 20%, rgba(255,0,150,0.05), transparent),
+                  radial-gradient(ellipse at 10% 70%, rgba(0,255,255,0.05), transparent);
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    .iris-blink {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: black;
+      opacity: 0;
+      pointer-events: none;
+      animation: iris-blink 30s infinite;
+      z-index: 999;
+    }
+
+    @keyframes iris-blink {
+      0%, 98%, 100% { opacity: 0; }
+      99% { opacity: 0.3; }
+    }
+
+    #ambient-particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 999;
+      pointer-events: none;
+    }
+
+    .hud-corner {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 0.85em;
+      color: var(--glitch-color-2);
+      opacity: 0.3;
+      letter-spacing: 1px;
+      text-shadow: 0 0 5px var(--glitch-color-2);
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="wallpaper-container">
+    <canvas id="ambient-particles"></canvas>
+
+    <div class="image-container">
+      <img src="character.png" alt="Cyberpunk Character"/>
+      <div class="halftone-overlay"></div>
+    </div>
+
+    <div class="glitch-overlay"></div>
+    <div class="hi-text-overlay"><span id="hi-text"></span></div>
+    <div class="blinking-overlay"></div>
+    <div class="scanlines"></div>
+    <div class="light-leak"></div>
+    <div class="iris-blink"></div>
+    <div class="hud-corner">SYS ∆ 88.021.034 | ∑ TORONTO</div>
+  </div>
+
+  <svg style="display: none;">
+    <filter id="chromatic">
+      <feOffset in="SourceGraphic" dx="1" dy="0" result="r"/>
+      <feOffset in="SourceGraphic" dx="-1" dy="0" result="b"/>
+      <feBlend in="r" in2="b" mode="screen"/>
+    </filter>
+  </svg>
+
+  <script>
+    // Parallax effect
+    const container = document.querySelector('.wallpaper-container');
+    const imageContainer = document.querySelector('.image-container');
+    const glitch = document.querySelector('.glitch-overlay');
+
+    container.addEventListener('mousemove', (e) => {
+      const { clientX, clientY } = e;
+      const { offsetWidth, offsetHeight } = container;
+      const xPercent = (clientX / offsetWidth) - 0.5;
+      const yPercent = (clientY / offsetHeight) - 0.5;
+      imageContainer.style.transform = `scale(1.1) translate(${xPercent * -30}px, ${yPercent * -30}px)`;
+    });
+
+    container.addEventListener('click', () => {
+      glitch.classList.add('active-glitch');
+      setTimeout(() => glitch.classList.remove('active-glitch'), 300);
+    });
+
+    // Typing text
+    const text = "WELCOME >_";
+    let i = 0;
+    setInterval(() => {
+      document.getElementById("hi-text").textContent = text.substring(0, i++);
+      if (i > text.length) i = 0;
+    }, 150);
+
+    // Ambient particles
+    const ambientCanvas = document.getElementById("ambient-particles");
+    const ambientCtx = ambientCanvas.getContext("2d");
+    ambientCanvas.width = window.innerWidth;
+    ambientCanvas.height = window.innerHeight;
+
+    let dustParticles = Array.from({ length: 75 }, () => ({
+      x: Math.random() * ambientCanvas.width,
+      y: Math.random() * ambientCanvas.height,
+      radius: Math.random() * 1.5 + 0.5,
+      speedY: Math.random() * 0.3 + 0.1,
+      alpha: Math.random() * 0.3 + 0.2
+    }));
+
+    function animateAmbientParticles() {
+      ambientCtx.clearRect(0, 0, ambientCanvas.width, ambientCanvas.height);
+      for (let p of dustParticles) {
+        ambientCtx.beginPath();
+        ambientCtx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI);
+        ambientCtx.fillStyle = `rgba(0, 255, 255, ${p.alpha})`;
+        ambientCtx.fill();
+        p.y += p.speedY;
+        if (p.y > ambientCanvas.height) p.y = 0;
+      }
+      requestAnimationFrame(animateAmbientParticles);
+    }
+    animateAmbientParticles();
+    // Color theme switcher (call from console)
+    function setTheme({ glitch1, glitch2, particle, text }) {
+      const root = document.documentElement.style;
+      if (glitch1) root.setProperty('--glitch-color-1', glitch1);
+      if (glitch2) root.setProperty('--glitch-color-2', glitch2);
+      if (particle) root.setProperty('--particle-color', particle);
+      if (text) root.setProperty('--text-color', text);
+    }
+
+    setTheme({
+        glitch1: '#ff0055',
+        glitch2: '#00ffff',
+        particle: '#00ffff',
+        text: '#00ffee'
+    });
+  </script>
+</body>
+</html>
