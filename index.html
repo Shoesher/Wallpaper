@@ -8,18 +8,18 @@
     @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
 
     :root {
-      --glitch-color-1: #ff00ff;
+      --glitch-color-1: #ff0055;
       --glitch-color-2: #00ffff;
       --main-font: 'Roboto Mono', monospace;
       --particle-color: #00ffff;
-      --text-color: #00ff00;
+      --text-color: #00ffee;
     }
 
     body {
       margin: 0;
       padding: 0;
       overflow: hidden;
-      background-color: #0a0a0a;
+      background-color: #050505;
       font-family: var(--main-font);
       cursor: none;
     }
@@ -49,7 +49,7 @@
       height: 100%;
       object-fit: cover;
       object-position: center;
-      filter: brightness(0.8) contrast(1.1) url(#chromatic);
+      filter: brightness(0.7) contrast(1.2) url(#chromatic);
     }
 
     .halftone-overlay {
@@ -57,7 +57,7 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 20%, transparent 20.1%);
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 20%, transparent 20.1%);
       background-size: 5px 5px;
       animation: halftone-fade 10s infinite alternate;
       mix-blend-mode: overlay;
@@ -126,7 +126,7 @@
 
     @keyframes halftone-fade {
       0%, 100% { opacity: 0.1; }
-      50% { opacity: 0.5; }
+      50% { opacity: 0.4; }
     }
 
     .hi-text-overlay {
@@ -141,14 +141,14 @@
     .hi-text-overlay span {
       color: var(--text-color);
       font-size: 3em;
-      text-shadow: 0 0 5px var(--text-color), 0 0 10px var(--text-color);
+      text-shadow: 0 0 3px var(--text-color), 0 0 6px var(--text-color);
     }
 
     .blinking-overlay {
       position: absolute;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.8);
+      background-color: rgba(0, 0, 0, 0.85);
       pointer-events: none;
       opacity: 0;
       animation: screen-blink 15s linear infinite;
@@ -167,8 +167,8 @@
       pointer-events: none;
       background: repeating-linear-gradient(
         to bottom,
-        rgba(255,255,255,0.03),
-        rgba(255,255,255,0.03) 1px,
+        rgba(255,255,255,0.015),
+        rgba(255,255,255,0.015) 1px,
         transparent 1px,
         transparent 3px
       );
@@ -185,8 +185,8 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      background: radial-gradient(ellipse at 80% 20%, rgba(255,0,150,0.05), transparent),
-                  radial-gradient(ellipse at 10% 70%, rgba(0,255,255,0.05), transparent);
+      background: radial-gradient(ellipse at 80% 20%, rgba(255,0,150,0.02), transparent),
+                  radial-gradient(ellipse at 10% 70%, rgba(0,255,255,0.02), transparent);
       mix-blend-mode: screen;
       pointer-events: none;
     }
@@ -221,9 +221,9 @@
       left: 20px;
       font-size: 0.85em;
       color: var(--glitch-color-2);
-      opacity: 0.3;
+      opacity: 0.25;
       letter-spacing: 1px;
-      text-shadow: 0 0 5px var(--glitch-color-2);
+      text-shadow: 0 0 4px var(--glitch-color-2);
       pointer-events: none;
     }
   </style>
@@ -255,7 +255,6 @@
   </svg>
 
   <script>
-    // Parallax effect
     const container = document.querySelector('.wallpaper-container');
     const imageContainer = document.querySelector('.image-container');
     const glitch = document.querySelector('.glitch-overlay');
@@ -273,15 +272,13 @@
       setTimeout(() => glitch.classList.remove('active-glitch'), 300);
     });
 
-    // Typing text
-    const text = "HI SHAHRIAR >_";
+    const text = "► HI SHAHRIAR";
     let i = 0;
     setInterval(() => {
       document.getElementById("hi-text").textContent = text.substring(0, i++);
       if (i > text.length) i = 0;
     }, 150);
 
-    // Ambient particles
     const ambientCanvas = document.getElementById("ambient-particles");
     const ambientCtx = ambientCanvas.getContext("2d");
     ambientCanvas.width = window.innerWidth;
@@ -308,7 +305,7 @@
       requestAnimationFrame(animateAmbientParticles);
     }
     animateAmbientParticles();
-    // Color theme switcher (call from console)
+
     function setTheme({ glitch1, glitch2, particle, text }) {
       const root = document.documentElement.style;
       if (glitch1) root.setProperty('--glitch-color-1', glitch1);
@@ -318,10 +315,10 @@
     }
 
     setTheme({
-        glitch1: '#ff0055',
-        glitch2: '#00ffff',
-        particle: '#00ffff',
-        text: '#00ffee'
+      glitch1: '#ff0055',
+      glitch2: '#00ffff',
+      particle: '#00ffff',
+      text: '#00ffee'
     });
   </script>
 </body>
