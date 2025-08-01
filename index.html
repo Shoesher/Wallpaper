@@ -259,6 +259,19 @@
     const imageContainer = document.querySelector('.image-container');
     const glitch = document.querySelector('.glitch-overlay');
 
+    const morningMsg = [
+      "► Good morning", "► What's up", "► Sleep well?", "► What's in store"
+    ];
+    const afternoonMsg = [
+      "► Keep working", "► Eat lunch?", "► How's it going", "► No movieees!!!"
+    ];
+    const eveningMsg = [
+      "► Take it easy", "► Chill bro", "► What are you playing?", "► Is this tuff in bangladesh"
+    ];
+    const nightMsg = [
+      "► Are you gonna sleep?", "► Tired...", "► Hungry... get a snack", "► Mangos, mangos, mangos"
+    ];
+
     container.addEventListener('mousemove', (e) => {
       const { clientX, clientY } = e;
       const { offsetWidth, offsetHeight } = container;
@@ -272,11 +285,29 @@
       setTimeout(() => glitch.classList.remove('active-glitch'), 300);
     });
 
-    const text = "► HI SHAHRIAR";
+    let message = "";
     let i = 0;
+
+    function setSentence() {
+      const hours = new Date().getHours();
+      if (hours >= 0 && hours < 10) {
+        message = morningMsg[Math.floor(Math.random() * morningMsg.length)];
+      } else if (hours >= 10 && hours < 17) {
+        message = afternoonMsg[Math.floor(Math.random() * afternoonMsg.length)];
+      } else if (hours >= 17 && hours < 20) {
+        message = eveningMsg[Math.floor(Math.random() * eveningMsg.length)];
+      } else {
+        message = nightMsg[Math.floor(Math.random() * nightMsg.length)];
+      }
+      i = 0;
+    }
+
+    setSentence();
+    setInterval(setSentence, 60000);
+
     setInterval(() => {
-      document.getElementById("hi-text").textContent = text.substring(0, i++);
-      if (i > text.length) i = 0;
+      document.getElementById("hi-text").textContent = message.substring(0, i++);
+      if (i > message.length) i = 0;
     }, 150);
 
     const ambientCanvas = document.getElementById("ambient-particles");
